@@ -2,15 +2,20 @@ package com.example.demo.security;
 
 import org.springframework.stereotype.Service;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+
 import java.security.Key;
 import java.util.Date;
 
 @Service
-public class JwtService  {
-     private final String SECRET = "mysecretkeymysecretkeymysecretkey123"; 
+public class JwtService {
+
+    private final Dotenv dotenv = Dotenv.load();
+
+    private final String SECRET = dotenv.get("JWT_SECRET");
 
     private Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
